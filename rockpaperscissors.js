@@ -13,6 +13,15 @@
 
 //rock-paper-scissors
     //computer randomly selects between rock-paper-scissors
+
+const randomChoice = ["rock", "paper", "scissors"];
+
+function getComputerChoice(){
+    let choice = randomChoice[Math.floor(Math.random() * randomChoice.length)];
+    return choice;
+}
+
+console.log(getComputerChoice());
     //once selection is made check it against the user input
     //if user selects rock then computer needs to select paper to win
     //if user selects paper then computer needs to select scissors to win
