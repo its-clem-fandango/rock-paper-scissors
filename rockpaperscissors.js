@@ -23,11 +23,20 @@
 
 //simplify it first by making game run once
 //repeat game 5 times
+//keep score
+        //assign a score to the player and computer
+        //player and computer start with 0
+        //if player wins 3, player wins
+        //if computer wins 3, computer wins
 
-//Ask question and check for correct input
 
 
-function choiceChecker(){ //Play game on condition rock or paper or scissors is true else re-prompt
+//ROCK, PAPER, SCISSORS CONSOLE GAME
+
+
+//Asks players' choice and checks for correct input otherwise prompt again
+
+function choiceChecker(){
     const askPlayerChoice = prompt("Play either Rock, Paper, or Scissors"); //Ask for user input and save it in the variable askPlayerInput
     let makeChoiceInsensitive = askPlayerChoice.toLowerCase();//create a new variable that saves the players input and makes it all lowercase
 
@@ -43,7 +52,11 @@ function choiceChecker(){ //Play game on condition rock or paper or scissors is 
     }
 }
 
+
+
 //Computer randomly selects between rock, paper, or scissors
+
+
 const gameChoices = ["rock", "paper", "scissors"]; //this is an array with strings. Arrays are used to store multiple values in a single variable.
 
 function getComputerChoice(){
@@ -51,7 +64,9 @@ function getComputerChoice(){
     return choice; //to store the randomly selected variable we created a local variable called choice
 }
 
+
 //Play one round 
+
 
 function playRound(playerSelection, computerSelection){
     if (playerSelection === "rock" && computerSelection === "scissors"){
@@ -66,27 +81,68 @@ function playRound(playerSelection, computerSelection){
         return console.log("You lose! Rock beats scissors."); 
     } else if (playerSelection === "scissors" && computerSelection === "paper"){
         return console.log("You win! Scissors beats paper.");
-    } else return console.log ("It's a draw!");
+    } else return console.log ("The round ended in a draw!");
 }
 
-//Play five rounds.
+
+//Play five rounds and keep score.
+
 
 function game(){
+
+    let playerScore = 0; //if their were a score function these two variables would need to be kept out of the function to be accessible outside of the function (global vs. local) and be passed to the function as arguments that are updated each round
+    let computerScore = 0;
+        
     for (i = 0; i < 5; i++){ //pass the arguments playerSelection and computerSelection to playRound and run it five times
         const playerSelection = choiceChecker();//I needed to have these two variables within the loop for playround to work i.e. for the variables player/computerselection to be passed to the playround function. before I had it outside as a global variable but I only needed that to test the playround function.
         const computerSelection = getComputerChoice();// in the actual loop, playround was ONLY running playround with the same input five times 
         playRound(playerSelection, computerSelection);//i.e. playerselection and computerselection weren't being updated inside of the loop. Because these values were not updated inside the loop, they remained the same each time the playRound function was called.
-    
-        //assign a score to the player and computer
-        //if player wins 3, player wins
-        //if computer wins 3, computer wins
-    
+
+        //if Player wins round increment by 1, if computer wins increment by 1, else both get 1
+        
+        if (playerSelection === "rock" && computerSelection === "scissors"){
+            playerScore++;
+            console.log(`Player: ${playerScore}`);
+            console.log(`Computer: ${computerScore}`);
+        } else if (playerSelection === "rock" && computerSelection === "paper"){
+            computerScore++;
+            console.log(`Player: ${playerScore}`);
+            console.log(`Computer: ${computerScore}`);
+        } else if (playerSelection === "paper" && computerSelection === "scissors"){
+            computerScore++;
+            console.log(`Player: ${playerScore}`);
+            console.log(`Computer: ${computerScore}`);
+        } else if (playerSelection === "paper" && computerSelection === "rock"){
+            playerScore++;
+            console.log(`Player: ${playerScore}`);
+            console.log(`Computer: ${computerScore}`);
+        } else if (playerSelection === "scissors" && computerSelection === "rock"){
+            computerScore++;
+            console.log(`Player: ${playerScore}`);
+            console.log(`Computer: ${computerScore}`);
+        } else if (playerSelection === "scissors" && computerSelection === "paper"){
+            playerScore++;
+            console.log(`Player: ${playerScore}`);
+            console.log(`Computer: ${computerScore}`);
+        } else {
+            playerScore++;
+            computerScore++;
+            console.log(`Player: ${playerScore}`);
+            console.log(`Computer: ${computerScore}`);
+        }
     }
-}
+
+
+//Declare game outcome
+
+//I initially had this in the loop but realized it kept declaring winner or loser every round 
+    if (playerScore > 3){ 
+        console.log("You won the game!");
+    } else if (playerScore < 3) {
+        console.log("You lost the game!");
+    } else console.log("The game ended in a draw!");
+    
+}    
+
 
 game();
-
-
-
-//INTERESTING: im getting back undefined instead of rock from choicechecker and the correct computerselect
-//QUESTION: why is math.random able to pick rock or paper or scissors out of the array but trying to use it in a conditional, the === wouldnt work i.e. sometimes it would only see rock, or sometimes nothing at all I think
